@@ -1,5 +1,5 @@
 # m6A
-Pipeline for MeRIP-seq data analysis
+Code used for neMeRIP-seq data analysis in Bertero et al.
 
 
 
