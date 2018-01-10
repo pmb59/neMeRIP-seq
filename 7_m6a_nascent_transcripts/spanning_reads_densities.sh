@@ -14,7 +14,7 @@
 
 
 ########################################################################
-# Data modification and 
+# Data merge and reads coverage
 ########################################################################
 
 # Merge bam files
@@ -129,6 +129,8 @@ plotHeatmap -m matrix_SMAD_down_can_SpannHH2.tab.gz -out SMAD_down_Can_Spann_Dow
 --heatmapHeight 20 --heatmapWidth 8 --zMax 150 \
 --sortUsing mean --sortUsingSamples 2 --sortRegions descend
 
+mv SMAD_down_Can_Spann_DowHH2_500.pdf SMAD_2-3_figS6_g.pdf
+
 ## Join exons with amd without and spanning reads 
 cat Substracted_exons_HHFC2.bed Exons_spanning_read_downHHFC_2.bed > Exons_merged.bed
 sort -k1,1 -k2,2 -k3,3n -k5,5n -u Exons_merged.bed > tmp.bed && mv tmp.bed Exons_merged.bed
@@ -141,4 +143,4 @@ plotHeatmap -m matrix_SMAD_down_can_SpannHH2_exon_merged.tab.gz -out SMAD_down_C
 --sortUsing mean --sortUsingSamples 2 --sortRegions descend
 
 # Final figure
-mv SMAD_down_Can_Spann_DowHH2_exon_merged_00.pdf SMAD_2-3_figS6g_h.pdf
+mv SMAD_down_Can_Spann_DowHH2_exon_merged_00.pdf SMAD_2-3_figS6_h.pdf
