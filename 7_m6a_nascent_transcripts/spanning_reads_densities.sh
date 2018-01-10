@@ -129,6 +129,7 @@ plotHeatmap -m matrix_SMAD_down_can_SpannHH2.tab.gz -out SMAD_down_Can_Spann_Dow
 --heatmapHeight 20 --heatmapWidth 8 --zMax 150 \
 --sortUsing mean --sortUsingSamples 2 --sortRegions descend
 
+# Figure Suplemental 6 G
 mv SMAD_down_Can_Spann_DowHH2_500.pdf SMAD_2-3_figS6_g.pdf
 
 ## Join exons with amd without and spanning reads 
@@ -142,5 +143,5 @@ plotHeatmap -m matrix_SMAD_down_can_SpannHH2_exon_merged.tab.gz -out SMAD_down_C
 --heatmapHeight 20 --heatmapWidth 8 --zMax 150 \
 --sortUsing mean --sortUsingSamples 2 --sortRegions descend
 
-# Final figure
+# Figure Suplemental 6 H
 mv SMAD_down_Can_Spann_DowHH2_exon_merged_00.pdf SMAD_2-3_figS6_h.pdf
