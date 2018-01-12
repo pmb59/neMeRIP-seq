@@ -1,5 +1,3 @@
-
-
 OUT="../m6A/MACS/"
 
 #Activin
