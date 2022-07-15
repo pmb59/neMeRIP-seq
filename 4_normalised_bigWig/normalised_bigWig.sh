@@ -18,7 +18,7 @@ cd ../RSeQC-2.6/scripts;
 normalize_bigwig.py -i ${outDIR}${FILE}.bw -o ${outDIR}${FILE}.normalised.bgr -s $chromSizes -f bgr;
 #4-norm_bgr to norm_bw
 cd $outDIR
-bedGraphToBigWig ${outDIR}${FILE}.normalised.bgr $chromSizes ${outDIR}${FILE}.normalised.bw; 
+bedGraphToBigWig ${outDIR}${FILE}.normalised.bgr $chromSizes ${outDIR}${FILE}.normalised.bw;
 #5-remove other files
 rm ${outDIR}${FILE}.wig;
 rm ${outDIR}${FILE}.bw;

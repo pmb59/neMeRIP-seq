@@ -3,12 +3,12 @@
 ## Created on 10th of November 2017
 ## @author: Igor Ruiz de los Mozos
 
-# Main script to plot densities and hetmaps of m6a NeMeRIP-seq peaks on Exons, Introns and spanning reads between both 
+# Main script to plot densities and hetmaps of m6a NeMeRIP-seq peaks on Exons, Introns and spanning reads between both
 
-# Dependencies 
+# Dependencies
 # Below programs must be instaled on the PATH. Check manuals for installation and usage
 #
-#	bedtools v2.26.0 			http://bedtools.readthedocs.io/en/latest/ 
+#	bedtools v2.26.0 			http://bedtools.readthedocs.io/en/latest/
 #	samtools v0.1.19-44428cd	http://samtools.sourceforge.net/
 #	deeptools 2.5.3 			https://deeptools.readthedocs.io/en/latest/index.html
 
@@ -19,11 +19,11 @@
 
 # Merge bam files
 bash merge_bam.sh m6a_IP_A_merge.TopHap.bam m6a_IP_A1.sorted.bam m6a_IP_A2.sorted.bam m6a_IP_A3.sorted.bam
-bash merge_bam.sh m6a_IP_S_merge.TopHat.bam m6a_IP_S1.sorted.bam m6a_IP_S2.sorted.bam  m6a_IP_S3.sorted.bam 
+bash merge_bam.sh m6a_IP_S_merge.TopHat.bam m6a_IP_S1.sorted.bam m6a_IP_S2.sorted.bam  m6a_IP_S3.sorted.bam
 bash merge_bam.sh m6a_input2_A_merge.TopHat.bam m6a_input2_A1.sorted.bam m6a_input2_A2.sorted.bam m6a_input2_A3.sorted.bam
 bash merge_bam.sh m6a_input2_S_merge.TopHat.bam m6a_input2_S1.sorted.bam m6a_input2_S2.sorted.bam m6a_input2_S3.sorted.bam
 
-# Calculate coverage of bam files to BigWig. 
+# Calculate coverage of bam files to BigWig.
 bamCoverage --normalizeTo1x 2730870000 --bam /Volumes/lab-ulej/working/Igor/SMAD/m6a_input2_A_merge.TopHat.bam --outFileName m6a_input2_A_merge.sort.bigWig --outFileFormat bigwig
 bamCoverage --normalizeTo1x 2730870000 --bam /Volumes/lab-ulej/working/Igor/SMAD/m6a_input2_S_merge.TopHat.bam --outFileName m6a_input2_S_merge.sort.bigWig --outFileFormat bigwig
 bamCoverage --normalizeTo1x 2730870000 --bam /Volumes/lab-ulej/working/Igor/SMAD/m6a_IP_A_merge.TopHap.bam --outFileName m6a_IP_A_merge.sort.bigWig --outFileFormat bigwig
@@ -37,7 +37,7 @@ sort -k1,1 -k2,2 -k3,3n -u Subset3A_ann.bed > tmp.bed && mv tmp.bed Subset3A_ann
 cat Subset3A.bed | awk '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 }' > tmp.bed && mv tmp.bed Subset3A_Bed.bed
 
 ########################################################################
-# Obtaining Exons with spanning reads 
+# Obtaining Exons with spanning reads
 ########################################################################
 
 # m6a peaks overlaping with Introns
@@ -63,7 +63,7 @@ sort -k1,1 -k2,2 -k3,3n -k5,5n -u Subset3A_ann_spann_reads.bed > tmp.bed && mv t
 cat Subset3A_ann_spann_reads.bed | awk '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9 "\t" $10 "\t" $11 "\t" $12 "\t" $13 "\t" $14 "\t" "SpannReads"}' > tmp.bed && mv tmp.bed Subset3A_ann_spann_reads.bed
 # exons within spannig reads
 bedtools intersect -nonamecheck -wa -a Exons_hg38.bed -b Subset3A_ann_spann_reads.bed > Subset3A_ann_spann_reads_Exons.bed
-sort -k1,1 -k2,2 -k3,3n -k5,5n -u Subset3A_ann_spann_reads_Exons.bed > tmp.bed && mv tmp.bed Subset3A_ann_spann_reads_Exons.bed 
+sort -k1,1 -k2,2 -k3,3n -k5,5n -u Subset3A_ann_spann_reads_Exons.bed > tmp.bed && mv tmp.bed Subset3A_ann_spann_reads_Exons.bed
 
 bedtools intersect -nonamecheck -wa -a Exons_hg38.bed -b Subset3A_ann_spann_reads_Down.bed > Subset3A_ann_spann_reads_Exons_m6Down.bed
 sort -k1,1 -k2,2 -k3,3n -k5,5n -u Subset3A_ann_spann_reads_Exons_m6Down.bed > tmp.bed && mv tmp.bed Subset3A_ann_spann_reads_Exons_m6Down.bed
@@ -77,8 +77,8 @@ sort -k1,1 -k2,2 -k3,3n -k5,5n -u Subset3A_ann_spann_reads_Exons_m6Down.bed > tm
 computeMatrix scale-regions -S m6a_input2_A_merge.sort.bigWig m6a_IP_A_merge.sort.bigWig m6a_input2_S_merge.sort.bigWig m6a_IP_S_merge.sort.bigWig -R Subset3A_ann_m6a_Exons.bed Subset3A_ann_m6a_Introns.bed Downregulated.bed Upregulated.bed -out matrix_SMAD.tab.gz --missingDataAsZero --startLabel TSS --endLabel TES --skipZeros -a 5000 -b 5000 -bs 10
 
 plotHeatmap -m matrix_matrix_SMAD_all.tab.gz -out SMAD.pdf --missingDataColor "#FFFFFF" --colorMap magma_r --samplesLabel Input_A m6a_A Input_S m6a_S --regionsLabel Exons Introns Downregulated_m6a Upregulated_m6a --startLabel start --endLabel end --plotTitle 'SMAD m6a' \
---heatmapHeight 15 --heatmapWidth 8 \
---sortUsing mean --sortUsingSamples 2 --sortRegions descend
+    --heatmapHeight 15 --heatmapWidth 8 \
+    --sortUsing mean --sortUsingSamples 2 --sortRegions descend
 
 
 ## Only exons and introns with fold chance peaks
@@ -96,11 +96,11 @@ sort -k1,1 -k2,2 -k3,3n -k5,5n -u Upregulated_m6a_Introns.bed > tmp.bed && mv tm
 
 
 # Plot exons and introns with fold chance peaks Downregulated
-computeMatrix scale-regions -S m6a_input2_A_merge.sort.bigWig m6a_IP_A_merge.sort.bigWig m6a_input2_S_merge.sort.bigWig m6a_IP_S_merge.sort.bigWig -R Downregulated_m6a_Exons.bed Downregulated_m6a_Introns.bed  -out matrix_SMAD_down_only.tab.gz --missingDataAsZero --startLabel Start --endLabel End --skipZeros -a 5000 -b 5000 -bs 10 
+computeMatrix scale-regions -S m6a_input2_A_merge.sort.bigWig m6a_IP_A_merge.sort.bigWig m6a_input2_S_merge.sort.bigWig m6a_IP_S_merge.sort.bigWig -R Downregulated_m6a_Exons.bed Downregulated_m6a_Introns.bed  -out matrix_SMAD_down_only.tab.gz --missingDataAsZero --startLabel Start --endLabel End --skipZeros -a 5000 -b 5000 -bs 10
 
 plotHeatmap -m matrix_SMAD_down_only.tab.gz -out SMAD_down_only.pdf --missingDataColor "#FFFFFF" --colorMap magma_r --samplesLabel Input_A m6a_A Input_S m6a_S --regionsLabel Down_m6a_Exons Down_m6a_Introns --startLabel Start --endLabel End --plotTitle 'SMAD m6a' \
---heatmapHeight 15 --heatmapWidth 8 \
---sortUsing mean --sortUsingSamples 2 --sortRegions descend
+    --heatmapHeight 15 --heatmapWidth 8 \
+    --sortUsing mean --sortUsingSamples 2 --sortRegions descend
 
 
 ########################################################################
@@ -122,26 +122,26 @@ sort -k1,1 -k2,2 -k3,3n -k5,5n -u Exons_spanning_read_downHHFC_2.bed > tmp.bed &
 bedtools intersect -nonamecheck -v -wa -a DownregulatedHH_2_m6a_Exons.bed -b Exons_spanning_read_downHHFC_2.bed > Substracted_exons_HHFC2.bed
 
 
-# Plot substracted Exons and Spanning read Exons ## 
-computeMatrix scale-regions -S m6a_input2_A_merge.sort.bigWig m6a_IP_A_merge.sort.bigWig m6a_input2_S_merge.sort.bigWig m6a_IP_S_merge.sort.bigWig -R Substracted_exons_HHFC2.bed Exons_spanning_read_downHHFC_2.bed -out matrix_SMAD_down_can_SpannHH2.tab.gz --missingDataAsZero --startLabel Start --endLabel End --skipZeros -a 500 -b 500 -bs 10 
+# Plot substracted Exons and Spanning read Exons ##
+computeMatrix scale-regions -S m6a_input2_A_merge.sort.bigWig m6a_IP_A_merge.sort.bigWig m6a_input2_S_merge.sort.bigWig m6a_IP_S_merge.sort.bigWig -R Substracted_exons_HHFC2.bed Exons_spanning_read_downHHFC_2.bed -out matrix_SMAD_down_can_SpannHH2.tab.gz --missingDataAsZero --startLabel Start --endLabel End --skipZeros -a 500 -b 500 -bs 10
 
 plotHeatmap -m matrix_SMAD_down_can_SpannHH2.tab.gz -out SMAD_down_Can_Spann_DowHH2_500.pdf --missingDataColor "#FFFFFF" --colorMap magma_r --samplesLabel "Input Activin" "m6a Activin" "Input SB 2h" "m6a SB 2h" --regionsLabel "Downregulated Exons" "Downregulated Spanning reads Exons" --startLabel "3'ss" --endLabel "5'ss" --plotTitle 'SMAD m6a Spanning Read exon boundaries FDR < 0.05 FC < -2' \
---heatmapHeight 20 --heatmapWidth 8 --zMax 150 \
---sortUsing mean --sortUsingSamples 2 --sortRegions descend
+    --heatmapHeight 20 --heatmapWidth 8 --zMax 150 \
+    --sortUsing mean --sortUsingSamples 2 --sortRegions descend
 
 # Figure Suplemental 6 G
 mv SMAD_down_Can_Spann_DowHH2_500.pdf SMAD_2-3_figS6_g.pdf
 
-## Join exons with amd without and spanning reads 
+## Join exons with amd without and spanning reads
 cat Substracted_exons_HHFC2.bed Exons_spanning_read_downHHFC_2.bed > Exons_merged.bed
 sort -k1,1 -k2,2 -k3,3n -k5,5n -u Exons_merged.bed > tmp.bed && mv tmp.bed Exons_merged.bed
 
-# Plot highly significant m6a peaks over Exons and Exons with spanning reads all together 
-computeMatrix scale-regions -S m6a_input2_A_merge.sort.bigWig m6a_IP_A_merge.sort.bigWig m6a_input2_S_merge.sort.bigWig m6a_IP_S_merge.sort.bigWig -R Exons_merged.bed -out matrix_SMAD_down_can_SpannHH2_exon_merged.tab.gz --missingDataAsZero --startLabel Start --endLabel End --skipZeros -a 500 -b 500 -bs 10 
+# Plot highly significant m6a peaks over Exons and Exons with spanning reads all together
+computeMatrix scale-regions -S m6a_input2_A_merge.sort.bigWig m6a_IP_A_merge.sort.bigWig m6a_input2_S_merge.sort.bigWig m6a_IP_S_merge.sort.bigWig -R Exons_merged.bed -out matrix_SMAD_down_can_SpannHH2_exon_merged.tab.gz --missingDataAsZero --startLabel Start --endLabel End --skipZeros -a 500 -b 500 -bs 10
 
 plotHeatmap -m matrix_SMAD_down_can_SpannHH2_exon_merged.tab.gz -out SMAD_down_Can_Spann_DowHH2_exon_merged_00.pdf --missingDataColor "#FFFFFF" --colorMap magma_r --samplesLabel "Input Activin" "m6a Activin" "Input SB 2h" "m6a SB 2h" --regionsLabel "All Downregulated Exons" --startLabel "3'ss" --endLabel "5'ss" --plotTitle 'SMAD m6a Spanning Read exon boundaries FDR < 0.05 FC < -2' \
---heatmapHeight 20 --heatmapWidth 8 --zMax 150 \
---sortUsing mean --sortUsingSamples 2 --sortRegions descend
+    --heatmapHeight 20 --heatmapWidth 8 --zMax 150 \
+    --sortUsing mean --sortUsingSamples 2 --sortRegions descend
 
 # Figure Suplemental 6 H
 mv SMAD_down_Can_Spann_DowHH2_exon_merged_00.pdf SMAD_2-3_figS6_h.pdf

@@ -48,16 +48,16 @@ fastq_extensionR2="_R2.fastq.gz"
 
 # fastq files names e.i: m6a_IP_A1_R1.fastq.gz & m6a_IP_A1_R2.fastq.gz
 FILES=("m6a_IP_A1"
-"m6a_IP_A2"
-"m6a_IP_A3"
-"m6a_input2_A1"
-"m6a_input2_A2"
-"m6a_input2_A3"
-"m6a_input2_S1"
-"m6a_input2_S2"
-"m6a_input2_S3"
-"m6a_IP_S1"
-"m6a_IP_S2"
+    "m6a_IP_A2"
+    "m6a_IP_A3"
+    "m6a_input2_A1"
+    "m6a_input2_A2"
+    "m6a_input2_A3"
+    "m6a_input2_S1"
+    "m6a_input2_S2"
+    "m6a_input2_S3"
+    "m6a_IP_S1"
+    "m6a_IP_S2"
 "m6a_IP_S3")
 
 # Selected file on array job
@@ -81,9 +81,9 @@ fastqc ${real_path}/Data/${filename}${fastq_extensionR2}
 ml STAR/2.5.2a-foss-2016b
 mkdir -p ${real_path}/${results_folder}/${filename}/STAR_Output/
 time STAR --runThreadN ${tread} --genomeDir $genome_dir --readFilesCommand zcat \
---readFilesIn ${real_path}/Data/${filename}${fastq_extensionR1} ${real_path}/Data/${filename}${fastq_extensionR2}\
---winAnchorMultimapNmax 100 --outFilterMultimapNmax 20 --outFileNamePrefix ${real_path}/${results_folder}/${filename}/STAR_Output/${filename} \
---outSAMtype BAM SortedByCoordinate --outWigType wiggle --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
+    --readFilesIn ${real_path}/Data/${filename}${fastq_extensionR1} ${real_path}/Data/${filename}${fastq_extensionR2}\
+    --winAnchorMultimapNmax 100 --outFilterMultimapNmax 20 --outFileNamePrefix ${real_path}/${results_folder}/${filename}/STAR_Output/${filename} \
+    --outSAMtype BAM SortedByCoordinate --outWigType wiggle --quantMode TranscriptomeSAM GeneCounts --twopassMode Basic
 
 # Transform wig files to TDF compressed and sort
 ml IGVTools/2.3.75-Java-1.7.0_80
