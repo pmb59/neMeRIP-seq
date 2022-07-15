@@ -20,7 +20,7 @@ jobs:
         uses: illvart/beautysh-action@latest
         with:
           # Pass beautysh options in args, for example:
-          args: '/*/*.sh --indent-size 4'
+          args: './*/*.sh --indent-size 4'
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
